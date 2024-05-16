@@ -23,6 +23,8 @@ jobs:
       # Checkout a repository with Flatpak manifests
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          submodules: true
 
       # See "GPG Signing" below
       - name: Setup GPG
@@ -36,7 +38,7 @@ jobs:
         uses: andyholmes/flatter@main
         with:
           files: |
-            build-aux/flatpak/Cataclysm-DDA/org.cataclysmdda.CataclysmDDA.json
+            Cataclysm-DDA/org.cataclysmdda.CataclysmDDA.json
           arch: ${{ matrix.arch }}
           gpg-sign: ${{ steps.gpg.outputs.fingerprint }}
           upload-bundles: true
