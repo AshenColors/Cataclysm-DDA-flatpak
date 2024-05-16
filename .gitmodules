@@ -1,0 +1,4 @@
+[submodule "Cataclysm-DDA"]
+	path = Cataclysm-DDA
+	url = https://github.com/AshenColors/Cataclysm-DDA
+	branch = 0.H-branch-flatpak
