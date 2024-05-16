@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  flatter:
+  build:
     name: Flatter
     runs-on: ubuntu-latest
     container:
@@ -43,25 +43,28 @@ jobs:
             --install-deps-from=flathub
           arch: ${{ matrix.arch }}
           gpg-sign: ${{ steps.gpg.outputs.fingerprint }}
-          # upload-bundles: true
+          upload-bundles: true
           upload-pages-artifact: true
-          upload-pages-includes: |
-            default.css
-            index.html
 
-  # See "Github Pages" below
+
   deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    needs: flatter
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+      # Add a dependency to the build job
+      needs: build
+  
+      # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+      permissions:
+        pages: write      # to deploy to Pages
+        id-token: write   # to verify the deployment originates from an appropriate source
+  
+      # Deploy to the github-pages environment
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+  
+      # Specify runner + deployment step
+      runs-on: ubuntu-latest
+      steps:
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v4 # or specific "vX.X.X" version tag for this action
+  
