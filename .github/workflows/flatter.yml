@@ -39,6 +39,8 @@ jobs:
         with:
           files: |
             Cataclysm-DDA/org.cataclysmdda.CataclysmDDA.json
+          flatpak-builder-args: |
+            --install-deps-from=flathub
           arch: ${{ matrix.arch }}
           gpg-sign: ${{ steps.gpg.outputs.fingerprint }}
           upload-bundles: true
