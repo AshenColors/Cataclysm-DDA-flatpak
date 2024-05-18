@@ -32,7 +32,7 @@ jobs:
         uses: crazy-max/ghaction-import-gpg@v5
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          passphrase: ""
 
       - name: Build
         uses: andyholmes/flatter@main
@@ -43,7 +43,7 @@ jobs:
             --install-deps-from=flathub
           arch: ${{ matrix.arch }}
           gpg-sign: ${{ steps.gpg.outputs.fingerprint }}
-          cache-key: '20240616'
+          cache-key: '20240618'
           upload-bundles: true
           upload-pages-artifact: true
 
