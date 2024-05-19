@@ -2,6 +2,7 @@ name: Flatter
 
 on:
   push:
+    paths: "Cataclysm-DDA"
   workflow_dispatch:
 
 jobs:
